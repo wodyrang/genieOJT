@@ -1,0 +1,43 @@
+server:
+  port: 5000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql-server:3306/my_database
+    username: root
+    password: password
+#  jpa:
+#    database: mysql
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: validate
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+# mybatis configuation
+mybatis:
+  mapper-locations: classpath*:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-handlers-package: com.github.magicdol
+
+# Setting logging levels
+logging:
+  level:
+    root: DEBUG
+    jdbc:
+      resultset: WARN
+      resultsettable: WARN
+      audit: WARN
+      sqlonly: DEBUG
+      sqltiming: WARN
+    com.netflix: WARN
+    org.springframework.web: INFO
+#    org.hibernate: WARN
+#    org.hibernate.type: WARN
+    net.genieworks.ginterface: DEBUG
+  file:
+    max-history: 14
+    max-size: 5120MB # 5GB
