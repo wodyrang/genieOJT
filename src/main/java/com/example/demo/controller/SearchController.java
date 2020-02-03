@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.code.enums.LocaleType;
 import com.example.demo.exception.BadRequestException;
+import com.example.demo.model.data.Pages;
 import com.example.demo.model.data.SearchResult;
 import com.example.demo.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * Created by wody@genieworks.net on 2020/01/31.
+ * Created by wody8674@gmail.com on 2020/01/31.
  *
  * 검색 처리 Controller.
  */
@@ -46,7 +47,6 @@ public class SearchController {
         final SearchResult searchResult = this.searchService.searchAlbum(title, localeType);
         return new ResponseEntity<>(searchResult, HttpStatus.OK);
     }
-
 
 
 }

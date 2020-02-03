@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by wody@genieworks.net on 2020/01/31.
+ * Created by wody8674@gmail.com on 2020/01/31.
  *
  * 검색 처리를 위한 Service.
  */

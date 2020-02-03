@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 
 /**
- * Created by wody@genieworks.net on 2020/01/31.
+ * Created by wody8674@gmail.com on 2020/01/31.
  */
 @Getter
 @AllArgsConstructor

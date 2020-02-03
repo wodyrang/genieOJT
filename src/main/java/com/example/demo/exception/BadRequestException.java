@@ -1,7 +1,7 @@
 package com.example.demo.exception;
 
 /**
- * Created by wody@genieworks.net on 2020/01/31.
+ * Created by wody8674@gmail.com on 2020/01/31.
  *
  * 400 오류 발생을 위한 Exception.
  */

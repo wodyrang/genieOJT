@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 
 /**
- * Created by wody@genieworks.net on 2020/01/31.
+ * Created by wody8674@gmail.com on 2020/01/31.
  */
 @Repository
-public interface LocaleRepository extends JpaRepository<LocaleId, Locale> {
+public interface LocaleRepository extends JpaRepository<Locale, LocaleId> {
 }
