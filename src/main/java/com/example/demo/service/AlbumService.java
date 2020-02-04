@@ -1,11 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.code.enums.LocaleType;
-import com.example.demo.model.data.AlbumResult;
-import com.example.demo.model.data.AlbumsResult;
-import com.example.demo.model.data.Pages;
+import com.example.demo.model.data.*;
 import com.example.demo.model.domain.Album;
+import com.example.demo.model.domain.Locale;
+import com.example.demo.model.domain.Song;
 import com.example.demo.repository.AlbumRepository;
+import com.example.demo.repository.LocaleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -36,6 +38,11 @@ public class AlbumService {
 
     /** 앨범 저장소. */
     private final AlbumRepository albumRepository;
+    /** 재생 지역 정보 저장소. */
+    private final LocaleRepository localeRepository;
+
+    /** 노래 관련 처리 Service */
+    private final SongService songService;
 
 
     /**
@@ -83,6 +90,55 @@ public class AlbumService {
         }
 
         return albumsResult;
+    }
+
+
+    /**
+     * 앨범 등록.
+     * @param album 앨범 정보.
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void saveAlbum(final Album album) {
+        this.albumRepository.save(album);
+    }
+
+
+    /**
+     * 앨범 정보 저장 처리.
+     * @param albumJsons 앨범 정보.
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void saveAllAlbumInfo(final List<AlbumJson> albumJsons) {
+        for (AlbumJson albumJson : albumJsons) {
+            final List<String> locales = albumJson.getLocales();
+            final List<SongJson> songJsonList = albumJson.getSongs();
+
+            // 앨범저장.
+            final Album album = Album.builder().albumTitle(albumJson.getAlbumTitle()).build();
+            this.saveAlbum(album);
+
+            // 재생지역 저장.
+            final List<Locale> localeList = locales.stream()
+                    .map(locale -> {
+                        final LocaleType type = LocaleType.findType(locale);
+                        return Locale.builder().album(album).localeType(type).build();
+                    })
+                    .collect(Collectors.toList());
+
+            this.localeRepository.saveAll(localeList);
+
+            // 노래 저장.
+            for (SongJson songJson : songJsonList) {
+                final Song song = Song.builder()
+                        .album(album)
+                        .title(songJson.getTitle())
+                        .length(songJson.getLength())
+                        .track(songJson.getTrack())
+                        .build();
+
+                this.songService.saveSong(song);
+            }
+        }
     }
 
 

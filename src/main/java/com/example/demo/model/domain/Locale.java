@@ -25,7 +25,7 @@ public class Locale extends BaseTimeEntity {
     @Id
     @ManyToOne
     @JoinColumn(name = "album_id")
-    private Album albumId;
+    private Album album;
 
     /** 지역코드 */
     @Id

@@ -44,4 +44,14 @@ public class SongService {
         return this.songRepository.findByTilte(title, localeType);
     }
 
+
+    /**
+     * 노래 저장.
+     * @param song 노래 정보.
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void saveSong(final Song song) {
+        this.songRepository.save(song);
+    }
+
 }

@@ -30,6 +30,7 @@ dependencies {
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.3'
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.3'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 
     compileOnly 'org.projectlombok:lombok'
