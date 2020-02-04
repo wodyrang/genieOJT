@@ -23,6 +23,17 @@ public class SongService {
 
 
     /**
+     * ID로 노래정보 조회
+     * @param sondId 노래 ID
+     * @return 노래정보.
+     */
+    @Transactional(readOnly = true)
+    public Song findById(final Long sondId) {
+        return this.songRepository.findById(sondId).orElse(null);
+    }
+
+
+    /**
      * 노래제목으로 노래 목록 조회.
      * @param title 노래 제목
      * @param localeType 재생 가능 지역

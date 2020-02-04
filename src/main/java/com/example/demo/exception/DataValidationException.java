@@ -6,7 +6,7 @@ import org.springframework.validation.BindingResult;
 
 
 /**
- * Created by wody@genieworks.net on 2020/02/03.
+ * Created by wody8674@gmail.com on 2020/02/03.
  *
  * 데이터 검증 오류시 발생하는 예외.
  */

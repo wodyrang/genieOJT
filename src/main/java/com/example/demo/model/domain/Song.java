@@ -37,6 +37,7 @@ public class Song extends BaseTimeEntity {
     private Integer track;
 
     /** 곡의 앨범정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "album_id", nullable = false, updatable = false)
     private Album album;
 }

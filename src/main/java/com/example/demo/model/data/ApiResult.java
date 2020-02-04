@@ -17,7 +17,7 @@ import java.util.Map;
 
 
 /**
- * Created by wody@genieworks.net on 2020/02/03.
+ * Created by wody8674@gmail.com on 2020/02/03.
  */
 @Getter
 @Setter
@@ -48,6 +48,34 @@ public class ApiResult<T> {
         private Map<String, List<String>> errorMap;
     }
 
+    /**
+     * API Result Constructor.
+     * @param httpStatus
+     */
+    @JsonIgnore
+    public ApiResult(final HttpStatus httpStatus) {
+        this.meta = new Meta();
+        this.meta.setStatus(httpStatus.value());
+        this.meta.setMessage(httpStatus.name());
+        this.meta.setTimestamp(LocalDateTime.now());
+        this.meta.setPath(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
+    }
+
+    /**
+     * API Result Constructor.
+     * @param httpStatus
+     * @param body
+     */
+    @JsonIgnore
+    public ApiResult(final HttpStatus httpStatus, final T body) {
+        this.meta = new Meta();
+        this.meta.setStatus(httpStatus.value());
+        this.meta.setMessage(httpStatus.name());
+        this.meta.setTimestamp(LocalDateTime.now());
+        this.meta.setPath(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
+
+        this.body = body;
+    }
 
     /**
      * API Result Constructor.

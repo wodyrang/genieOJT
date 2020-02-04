@@ -39,6 +39,17 @@ public class AlbumService {
 
 
     /**
+     * ID로 앨범 정보 조회.
+     * @param albumId 앨범 ID
+     * @return 앨범 정보.
+     */
+    @Transactional(readOnly = true)
+    public Album findById(final Long albumId) {
+        return this.albumRepository.findById(albumId).orElse(null);
+    }
+
+
+    /**
      * 앨범 제목으로 앨범 검색
      * @param title 앨범 제목
      * @param localeType 지역정보

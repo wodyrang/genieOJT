@@ -9,7 +9,7 @@ import lombok.Setter;
 
 
 /**
- * Created by wody@genieworks.net on 2020/02/03.
+ * Created by wody8674@gmail.com on 2020/02/03.
  *
  * 페이징 정보.
  */
@@ -33,21 +33,6 @@ public class Pages {
     @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     private String next;
 
-
-    /**
-     * 페이징 정보 초기화
-     * @param lastPage 마지막 페이지
-     * @param url url.
-     */
-    public Pages(final int lastPage, final String url) {
-        if (lastPage < 1) {
-            throw new InvalidParameterException("lastPage값은 1보다 작을 수 없습니다.");
-        }
-        this.page = 1;
-        this.lastPage = lastPage;
-        this.url = url;
-        this.setPageInfo();
-    }
 
     /**
      * 페이징 정보 초기화

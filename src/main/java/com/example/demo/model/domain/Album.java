@@ -37,6 +37,6 @@ public class Album extends BaseTimeEntity {
 
     /** 곡 정보 */
     @OneToMany(mappedBy = "album", fetch = FetchType.LAZY)
-    private List<Song> songs;
+    private List<Song> songList;
 
 }

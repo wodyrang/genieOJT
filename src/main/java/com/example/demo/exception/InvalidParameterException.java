@@ -2,7 +2,7 @@ package com.example.demo.exception;
 
 
 /**
- * Created by wody@genieworks.net on 2020/02/03.
+ * Created by wody8674@gmail.com on 2020/02/03.
  */
 public class InvalidParameterException extends RuntimeException {
 
