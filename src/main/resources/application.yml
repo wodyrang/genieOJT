@@ -1,0 +1,51 @@
+server:
+  port: 5000
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#    url: jdbc:mysql://localhost:3306/flatest
+    url: jdbc:log4jdbc:mysql://localhost:3306/flatest?useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    username: flatest_user1
+    password: flatest!@34
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+# mybatis configuation
+mybatis:
+  mapper-locations: classpath*:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-handlers-package: com.github.magicdol
+
+# Setting logging levels
+logging:
+  level:
+    root: DEBUG
+    jdbc:
+      resultset: WARN
+      resultsettable: WARN
+      audit: WARN
+      sqlonly: DEBUG
+      sqltiming: WARN
+    com.netflix: WARN
+    org.springframework.web: INFO
+    org.hibernate: WARN
+    org.hibernate.type: WARN
+    net.genieworks.ginterface: DEBUG
+  file:
+    max-history: 14
+    max-size: 5120MB # 5GB
+
+api:
+  service:
+    domain: http://localhost:5000/api
