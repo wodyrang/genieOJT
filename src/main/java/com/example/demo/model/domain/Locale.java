@@ -19,17 +19,21 @@ import javax.persistence.*;
 @IdClass(value = LocaleId.class)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Locale extends BaseTimeEntity {
+public class Locale {
 
-    /** 앨범정보 */
     @Id
-    @ManyToOne
-    @JoinColumn(name = "album_id")
-    private Album album;
+    @Column(name = "album_id")
+    private Long albumId;
 
     /** 지역코드 */
     @Id
     @Enumerated(value = EnumType.STRING)
     @Column(name = "locale_type")
     private LocaleType localeType;
+
+    /** 앨범정보 */
+    @ManyToOne
+    @JoinColumn(name = "album_id", insertable = false, updatable = false)
+    private Album album;
+
 }

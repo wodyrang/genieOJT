@@ -48,4 +48,4 @@ logging:
 
 api:
   service:
-    domain: https://localhost:5000/api/
+    domain: http://localhost:5000/api

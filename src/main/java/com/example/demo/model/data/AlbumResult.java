@@ -22,5 +22,6 @@ public class AlbumResult {
     private String albumTitle;
 
     /** 앨범의 노래 목록. */
-    private List<SongResult> songs;
+    @JsonProperty(value = "songs")
+    private List<SongResult> songList;
 }

@@ -19,7 +19,6 @@ public class PlayGroupSongResult {
     private Long playGroupId;
 
     /** 노래 ID */
-    @JsonProperty(value = "id")
     private Long songId;
 
     /** 노래 제목 */
@@ -32,11 +31,11 @@ public class PlayGroupSongResult {
     private Integer track;
 
     /** 등록 일시 */
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime createdDate;
 
     /** 수정 일시 */
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime modifiedDate;
 
 }

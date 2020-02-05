@@ -4,9 +4,13 @@ import com.example.demo.model.data.CreatePlayList;
 import com.example.demo.service.PlayListService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -21,19 +25,29 @@ public class CreatePlayListValidator implements Validator {
 
 
     @Override
-    public boolean supports(final Class<?> clazz) {
+    public boolean supports(@NonNull final Class<?> clazz) {
         return CreatePlayList.class.equals(clazz);
     }
 
     @Override
-    public void validate(final Object target, final Errors errors) {
+    public void validate(@NonNull final Object target, @NonNull final Errors errors) {
         final CreatePlayList createPlayList = (CreatePlayList) target;
 
-        final boolean duplName =
-                this.playListService.checkDuplicateGroupName(createPlayList.getUserId(), createPlayList.getGroupName());
+        final Long playGroupId = createPlayList.getPlayGroupId();
+        final Long userId = createPlayList.getUserId();
+        final String groupName = createPlayList.getGroupName();
 
-        if (duplName) {
-            errors.rejectValue("playListName", null, "이미 사용중인 이름이 존재합니다.");
+        if (playGroupId == null) {
+            if (StringUtils.isBlank(groupName)) {
+                errors.rejectValue("groupName", null, "이름은 필수입니다.");
+            }
+        }
+
+        if (StringUtils.isNotBlank(groupName)) {
+            final boolean duplName = this.playListService.checkDuplicateGroupName(userId, groupName);
+            if (duplName) {
+                errors.rejectValue("groupName", null, "이미 사용중인 이름이 존재합니다.");
+            }
         }
     }
 }

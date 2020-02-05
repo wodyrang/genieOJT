@@ -14,8 +14,8 @@ public class PageRequest {
 
     private int page = 1;
     private int size = 10;
-    private Sort.Direction direction = Sort.Direction.DESC;
-    private String[] sort = {"created_date"};
+    private Sort.Direction direction = Sort.Direction.ASC;
+    private String[] sort = {"createdDate"};
 
 
     /**

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.data.AlbumJson;
 import com.example.demo.model.data.AlbumsResult;
 import com.example.demo.model.data.PageRequest;
 import com.example.demo.service.AlbumService;
@@ -8,7 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 /**
@@ -30,9 +35,19 @@ public class AlbumController {
      */
     @GetMapping(value = "/albums")
     public ResponseEntity<AlbumsResult> searchAlbums(final PageRequest pageable) {
-        final AlbumsResult albumsResult = this.albumService.findAlbumsResult(pageable.of());
+        final AlbumsResult albumsResult = this.albumService.findAlbumsResult(pageable);
         return new ResponseEntity<>(albumsResult, HttpStatus.OK) ;
     }
 
 
+    /**
+     * 앨범 정보 등록.
+     * @param albumJsonList 앨범 정보
+     * @return 결과
+     */
+    @PostMapping(value = "/albums")
+    public ResponseEntity<String> saveAlbum(@RequestBody final List<AlbumJson> albumJsonList) {
+        this.albumService.saveAllAlbumInfo(albumJsonList);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }

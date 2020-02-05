@@ -23,7 +23,6 @@ public class CreatePlayList {
     private Long playGroupId;
 
     /** 저장할 그룹 이름 */
-    @NotBlank(message = "리스트 이름은 생략할 수 없습니다.")
     @JsonProperty(value = "playListName")
     private String groupName;
 

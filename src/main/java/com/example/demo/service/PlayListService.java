@@ -34,8 +34,8 @@ public class PlayListService {
 
     private final ModelMapper modelMapper;
 
-    private AlbumService albumService;
-    private SongService songService;
+    private final AlbumService albumService;
+    private final SongService songService;
 
     private final PlayGroupRepository playGroupRepository;
     private final PlayItemRepository playItemRepository;
@@ -123,7 +123,10 @@ public class PlayListService {
             playGroup = this.playGroupRepository.findById(playGroupId).orElse(null);
         }
         if (playGroupId == null || playGroup == null) {
-            playGroup = PlayGroup.builder().groupName(groupName).build();
+            playGroup = PlayGroup.builder()
+                            .groupName(groupName)
+                            .userId(createPlayList.getUserId())
+                            .build();
         }
 
         // 그룹 저장.
@@ -154,7 +157,9 @@ public class PlayListService {
         }
 
         // 개별 선택된 노래 등록.
-        reqSongIdList.addAll(createPlayList.getSongList());
+        if (CollectionUtils.isNotEmpty(createPlayList.getSongList())) {
+            reqSongIdList.addAll(createPlayList.getSongList());
+        }
 
         // Play list에 노래 저장.
         if (CollectionUtils.isNotEmpty(reqSongIdList)) {
@@ -162,7 +167,10 @@ public class PlayListService {
                     reqSongIdList.stream()
                             .map(id -> {
                                 final Song song = Song.builder().songId(id).build();
-                                return PlayItem.builder().playGroup(savedPlayGroup).song(song).build();
+                                return PlayItem.builder()
+                                        .playGroupId(savedPlayGroup.getPlayGroupId())
+                                        .songId(song.getSongId())
+                                        .build();
                             })
                             .collect(Collectors.toList());
 
@@ -210,29 +218,30 @@ public class PlayListService {
             throw new NotFoundException("해당 Play list를 찾을 수 없습니다.");
         }
 
+        // 선택한 ID가 없으면 전체 삭제.
         if (CollectionUtils.isEmpty(songIdList)) {
-            if (log.isWarnEnabled()) {
-                log.warn("삭제 요청한 Song ID값이 없습니다.");
-                log.warn("userId -> {}, playGroupId -> {}", userId, playGroupId);
-            }
-            return ;
+            this.playItemRepository.deleteByPlayGroup(PlayGroup.builder().playGroupId(playGroupId).build());
+        } else {
+
+            // 삭제 요청할 노래 정보 목록 생성.
+            final List<PlayItem> itemList = songIdList.stream()
+                    .map(songId -> {
+                        final Song song = this.songService.findById(songId);
+                        if (song == null) {
+                            return null;
+                        }
+
+                        return PlayItem.builder()
+                                .playGroupId(playGroup.getPlayGroupId())
+                                .songId(song.getSongId())
+                                .build();
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+
+            // 노래 삭제.
+            this.playItemRepository.deleteAll(itemList);
         }
-
-        // 삭제 요청할 노래 정보 목록 생성.
-        final List<PlayItem> itemList = songIdList.stream()
-                .map(songId -> {
-                    final Song song = this.songService.findById(songId);
-                    if (song == null) {
-                        return null;
-                    }
-
-                    return PlayItem.builder().playGroup(playGroup).song(song).build();
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-
-        // 노래 삭제.
-        this.playItemRepository.deleteAll(itemList);
     }
 
 }

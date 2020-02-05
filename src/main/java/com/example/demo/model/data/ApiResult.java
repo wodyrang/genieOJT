@@ -38,13 +38,16 @@ public class ApiResult<T> {
      */
     @Getter
     @Setter
-    public class Meta {
+    public static class Meta {
+
         private String path;
         private Integer status;
         private String message;
-        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
         private LocalDateTime timestamp;
+        @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
         private String trace;
+        @JsonInclude(value = JsonInclude.Include.NON_NULL)
         private Map<String, List<String>> errorMap;
     }
 

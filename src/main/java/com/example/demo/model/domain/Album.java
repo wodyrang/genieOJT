@@ -32,7 +32,7 @@ public class Album extends BaseTimeEntity {
     private String albumTitle;
 
     /** 앨범*/
-    @OneToMany(mappedBy = "albumId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "album", fetch = FetchType.LAZY)
     private List<Locale> locales;
 
     /** 곡 정보 */

@@ -22,16 +22,22 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class PlayItem {
 
-    /** 해당하는 그룹 정보. */
     @Id
-    @ManyToOne
     @Column(name = "play_group_id")
+    private Long playGroupId;
+
+    @Id
+    @Column(name = "song_id")
+    private Long songId;
+
+    /** 해당하는 그룹 정보. */
+    @ManyToOne
+    @JoinColumn(name = "play_group_id", insertable = false, updatable = false)
     private PlayGroup playGroup;
 
     /** song ID */
-    @Id
     @ManyToOne
-    @Column(name = "song_id")
+    @JoinColumn(name = "song_id", insertable = false, updatable = false)
     private Song song;
 
 }

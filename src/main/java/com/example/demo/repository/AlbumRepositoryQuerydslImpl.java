@@ -32,7 +32,8 @@ public class AlbumRepositoryQuerydslImpl extends QuerydslRepositorySupport imple
                         .and(JPAExpressions
                                 .select(qLocale.albumId)
                                 .from(qLocale)
-                                .where(qLocale.albumId.eq(qAlbum).and(qLocale.localeType.eq(localeType)))
+                                .where(qLocale.albumId.eq(qAlbum.albumId)
+                                        .and(qLocale.localeType.eq(localeType)))
                                 .exists()))
                 .fetch();
     }

@@ -74,10 +74,10 @@ public class AlbumService {
      * @return 앨범 목록.
      */
     @Transactional(readOnly = true)
-    public AlbumsResult findAlbumsResult(final Pageable pageable) {
+    public AlbumsResult findAlbumsResult(final PageRequest pageable) {
         final Page<AlbumResult> albumPage =
                 this.albumRepository
-                        .findAll(pageable)
+                        .findAll(pageable.of())
                         .map(album -> this.modelMapper.map(album, AlbumResult.class));
 
         final List<AlbumResult> albumList = albumPage.getContent();
@@ -86,7 +86,7 @@ public class AlbumService {
 
         if (CollectionUtils.isNotEmpty(albumList)) {
             albumsResult.setAlbums(albumList);
-            albumsResult.setPages(new Pages(pageable.getPageNumber(), total, this.serviceUrl));
+            albumsResult.setPages(new Pages(pageable.getPage(), total, this.serviceUrl + "/albums"));
         }
 
         return albumsResult;
@@ -121,7 +121,7 @@ public class AlbumService {
             final List<Locale> localeList = locales.stream()
                     .map(locale -> {
                         final LocaleType type = LocaleType.findType(locale);
-                        return Locale.builder().album(album).localeType(type).build();
+                        return Locale.builder().albumId(album.getAlbumId()).localeType(type).build();
                     })
                     .collect(Collectors.toList());
 

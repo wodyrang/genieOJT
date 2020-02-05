@@ -86,10 +86,15 @@ public class PlayListController {
      * @param playGroupId 선택한 PlayList
      * @return 결과
      */
-    @DeleteMapping(value = "/playList/{userId}/{playListId}")
-    public ResponseEntity<ApiResult<String>> deletePlayList(@PathVariable final Long userId
-            , @PathVariable(name = "playListId") final Long playGroupId) {
-        this.playListService.deletePlayList(userId, playGroupId);
+    @DeleteMapping(value = "/playList")
+    public ResponseEntity<ApiResult<String>> deletePlayList(@Valid @RequestBody final DeletePlayItem deletePlayItem
+            , final BindingResult errors) {
+
+        if (errors.hasErrors()) {
+            throw new DataValidationException(errors);
+        }
+
+        this.playListService.deletePlayList(deletePlayItem.getUserId(), deletePlayItem.getPlayGroupId());
         return new ResponseEntity<>(new ApiResult<>(HttpStatus.OK), HttpStatus.OK);
     }
 
@@ -101,11 +106,16 @@ public class PlayListController {
      * @param deletePlayItem 삭제요청할 song id list
      * @return 결과.
      */
-    @DeleteMapping(value = "/playList/song/{userId}/{playListId}")
-    public ResponseEntity<ApiResult<String>> deletePlayListSongs(@PathVariable final Long userId
-            , @PathVariable(name = "playListId") final Long playGroupId
-            , @RequestBody final DeletePlayItem deletePlayItem) {
-        this.playListService.deletePlayListSongs(userId, playGroupId, deletePlayItem.getSongs());
+    @DeleteMapping(value = "/playList/song")
+    public ResponseEntity<ApiResult<String>> deletePlayListSongs(@Valid @RequestBody final DeletePlayItem deletePlayItem
+            , final BindingResult errors) {
+
+        if (errors.hasErrors()) {
+            throw new DataValidationException(errors);
+        }
+
+        this.playListService.deletePlayListSongs(
+                deletePlayItem.getUserId(), deletePlayItem.getPlayGroupId(), deletePlayItem.getSongs());
         return new ResponseEntity<>(new ApiResult<>(HttpStatus.OK), HttpStatus.OK);
     }
 
