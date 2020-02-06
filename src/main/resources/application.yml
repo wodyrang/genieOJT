@@ -1,7 +1,5 @@
 server:
   port: 5000
-  servlet:
-    context-path: /api
 
 spring:
   datasource:
@@ -46,4 +44,4 @@ logging:
 
 api:
   service:
-    domain: http://localhost:5000/api
+    domain: http://localhost:5000

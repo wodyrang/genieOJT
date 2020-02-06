@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Created by wody@genieworks.net on 2020/02/04.
+ * Created by wody8674@gmail.com on 2020/02/04.
  */
 @Getter
 @Setter
