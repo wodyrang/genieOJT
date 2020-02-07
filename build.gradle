@@ -66,3 +66,7 @@ compileQuerydsl {
 configurations {
     querydsl.extendsFrom compileClasspath
 }
+
+bootRun {
+    systemProperties System.properties
+}

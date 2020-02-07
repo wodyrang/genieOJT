@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -35,5 +34,6 @@ public class CreatePlayList {
     private Long albumId;
 
     /** 저장할 songId 목록, 생략가능함. */
+    @JsonProperty(value = "songs")
     private List<Long> songList;
 }

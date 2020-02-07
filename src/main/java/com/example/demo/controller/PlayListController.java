@@ -82,8 +82,7 @@ public class PlayListController {
 
     /**
      * Play list 삭제 요청.
-     * @param userId 사용자 ID
-     * @param playGroupId 선택한 PlayList
+     * @param deletePlayItem 삭제 요청 정
      * @return 결과
      */
     @DeleteMapping(value = "/playList")
@@ -101,9 +100,7 @@ public class PlayListController {
 
     /**
      * Play List에 등록된 노래 삭제
-     * @param userId 사용자 ID
-     * @param playGroupId 선택한 PlayList
-     * @param deletePlayItem 삭제요청할 song id list
+     * @param deletePlayItem 삭제 요청 정
      * @return 결과.
      */
     @DeleteMapping(value = "/playList/song")

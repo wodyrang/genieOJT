@@ -62,19 +62,21 @@ public class Pages {
             throw new InvalidParameterException("잘못된 페이지 정보입니다.");
         }
 
+        final String uriFormat = "?page=%d";
+
         if (this.page == 1) {
             if (this.lastPage > 1) {
-                this.last = this.url + String.format("?page=%d", this.lastPage);
-                this.next = this.url + String.format("?page=%d", this.getNextPage());
+                this.last = this.url + String.format(uriFormat, this.lastPage);
+                this.next = this.url + String.format(uriFormat, this.getNextPage());
             }
         } else if (this.page < this.lastPage) {
-            this.first = this.url + String.format("?page=%d", 1);
-            this.prev = this.url + String.format("?page=%d", this.getPrevPage());
-            this.last = this.url + String.format("?page=%d", this.lastPage);
-            this.next = this.url + String.format("?page=%d", this.getNextPage());
+            this.first = this.url + String.format(uriFormat, 1);
+            this.prev = this.url + String.format(uriFormat, this.getPrevPage());
+            this.last = this.url + String.format(uriFormat, this.lastPage);
+            this.next = this.url + String.format(uriFormat, this.getNextPage());
         } else {
-            this.first = this.url + String.format("?page=%d", 1);
-            this.prev = this.url + String.format("?page=%d", this.getPrevPage());
+            this.first = this.url + String.format(uriFormat, 1);
+            this.prev = this.url + String.format(uriFormat, this.getPrevPage());
         }
     }
 

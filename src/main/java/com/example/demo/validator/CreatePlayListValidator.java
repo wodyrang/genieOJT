@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.NotNull;
-
 
 /**
  * Created by wody8674@gmail.com on 2020/02/04.
